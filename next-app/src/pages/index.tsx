@@ -1,26 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css'
-
-class Sondage {
-  is_interested_by_initiation: Boolean;
-  why_r_u_interested: string;
-  time_to_learn: string;
-  writed_content: Number;
-  audio_content: Number;
-  video_content: Number;
-  main_reason_to_take_initiation: string;
-  consulting: string;
-  why_immersion: string;
-  immersion: string;
-  time_for_immersion: string;
-  custom_time_for_immersion: string;
-  want_to_know: string;
-  lead_email: string;
-}
+import Sondage from '../components/Sondage';
 
 export default function Home() {
   let newSondage = new Sondage();
@@ -40,7 +22,7 @@ export default function Home() {
     console.log(currentSondage);
   }
   const showTimeForImmersionField = () => {
-    if ('no_immersion' === sondage.immersion) {
+    if ('no' === sondage.interested_by_immersion) {
       // prévoir la réinitialisation du champ supplémentaire de l'immersion
       return false;
     }
@@ -68,104 +50,110 @@ export default function Home() {
 
         <p className={styles.description}>
         Ouverture de canaux de communication intérieure/extérieure pour une lecture de notre vérité/réalité intérieure.
-
+        </p>
+        <p className={styles.description}>
         Redécouverte des rapports intérieurs/extérieurs de chacun.
-
-        Davantage d’autonomie dans son rapport au réel, décoder les messages que la vie nous envoie.
-
+        </p>
+        <p className={styles.description}>
         Installer une guidance pérenne, évoluer en conscience.
-
+        </p>
+        <p className={styles.description}>
         Casser les voiles et les mirages des masques, victimisation, sauveur, barreau, en finir avec le triangle de Kartmann.
-
+        </p>
+        <p className={styles.description}>
+        Davantage d’autonomie dans son rapport au réel, décoder les messages que la vie nous envoie.
+        </p>
+        <p className={styles.description}>
         Cesser d’alimenter les blessures de l’égo sur des dynamiques mal comprises.
-
+        </p>
+        <p className={styles.description}>
         Intégrer les mémoires et comprendre son expérience de vie.
-
+        </p>
+        <p className={styles.description}>
+        Cesser d’alimenter les blessures de l’égo sur des dynamiques mal comprises.
+        </p>
+        <p className={styles.description}>
         Restaurer la souveraineté de l’Être, transformer le monde et les relations humaines pour enfin vivre avec quiétude.
-
-        Bien vivre d’une activité lucrative passive/active.
         </p>
 
         <div className={styles.grid}>
-          <Form action="https://localhost/api/sondage" id={'sondageForm'} className={styles.card}>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Seriez-vous intéressé par une initiation au 3ieme oeil et à certains concepts multidimensionnels ?</Form.Label>
-              <Form.Check type={'radio'} label={"Oui"} value={'yes'} name={"is_interested_by_initiation"} onChange={handleChange} />
-              <Form.Check type={'radio'} label={"Non"} value={'no'} name={"is_interested_by_initiation"} onChange={handleChange} />
-              <Form.Label>Pourquoi ?</Form.Label>
-              <Form.Control as="textarea" rows={3} name={'why_r_u_interested'} onChange={handleChange} required={true} />
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>En sachant que chacun a son rythme d'apprentissage, quelle serait pour vous la durée idéale de l'initiation ?</Form.Label>
-              <Form.Select name={'time_to_learn'} onChange={handleChange} required={true}>
+          <form action="https://localhost/api/sondage" method="post">
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Seriez-vous intéressé par une initiation au 3ieme oeil et à certains concepts multidimensionnels ?</label>
+              <br/>
+              <input type="radio" name="is_interested_by_initiation" value={'yes'} id="" /> Oui
+              <br/>
+              <input type="radio" name="is_interested_by_initiation" value={'no'} id="" /> Non 
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Pourquoi ?</label>
+              <textarea name="why_are_you_interested_by_initiation" id="" cols={30} rows={10} className={'form-control'}></textarea>
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">En sachant que chacun a son rythme d'apprentissage, quelle serait pour vous la durée idéale de l'initiation ?</label>
+              <select name="time_to_learn" id="" className={'form-control'}>
                 <option value="1 semaine">1 semaine</option>
                 <option value="1 mois">1 mois</option>
                 <option value="3 mois ou plus">3 mois ou plus</option>
                 <option value="no_idea">Aucune idée</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Quel serait pour vous le bon équilibre entre contenus écrit, audio et vidéo ?</Form.Label><br/>
-              <Form.Text className="text-muted">
-                Ecrit
-              </Form.Text>
-              <Form.Range name={'writed_content'} onChange={handleChange} />
-              <Form.Text className="text-muted">
-                Audio
-              </Form.Text>
-              <Form.Range name={'audio_content'} onChange={handleChange} />
-              <Form.Text className="text-muted">
-                Vidéo
-              </Form.Text>
-              <Form.Range name={'video_content'} onChange={handleChange} />
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Quelle est la raison principale qui vous donnerait envie de prendre cette initiation ?</Form.Label>
-              <Form.Control as="textarea" rows={10} name={'main_reason_to_take_initiation'} onChange={handleChange} required={true} />
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Pensez-vous avoir besoin d'un suivi individuel ou groupé pendant la durée de l'initiation ?</Form.Label>
-              <Form.Check type={'radio'} name={'consulting'} value={'individual_consulting'} label={"Individuel de préférence"} onChange={handleChange} />
-              <Form.Check type={'radio'} name={'consulting'} value={'grouped_consulting'} label={"Groupé de préférence"} onChange={handleChange} />
-              <Form.Check type={'radio'} name={'consulting'} value={'both_consulting'} label={"Les deux"} onChange={handleChange} />
-              <Form.Check type={'radio'} name={'consulting'} value={'no_consulting'} label={"Je ne pense pas en avoir besoin"} onChange={handleChange} />
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>A la fin de cette initiation, seriez-vous intéressé par une immersion de groupe ?</Form.Label>
-              <Form.Check type={'radio'} name={'immersion'} value={'yes_immersion'} label={"Oui"} onChange={handleChange} />
-              <Form.Check type={'radio'} name={'immersion'} value={'no_immersion'} label={"Non"} onChange={handleChange} />
-              <Form.Label>Pourquoi ?</Form.Label>
-              <Form.Control as="textarea" rows={10} name={'why_immersion'} onChange={handleChange} />
-            </Form.Group>
+              </select>
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Quel serait pour vous le bon équilibre entre contenus écrit, audio et vidéo ?</label>
+              <br/>
+              <input type="checkbox" name="content_type_preference" value={'more_writing'} id="" /> Ecrit de préférence<br/>
+              <input type="checkbox" name="content_type_preference" value={'more_audio'} id="" /> Audio de préférence<br/>
+              <input type="checkbox" name="content_type_preference" value={'more_video'} id="" /> Vidéo de préférence
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Quelle est la raison principale qui vous donnerait envie de prendre cette initiation ?</label>
+              <textarea name="main_reason_to_take_initiation" id="" cols={30} rows={10} className={'form-control'}></textarea>
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Pensez-vous avoir besoin d'un suivi individuel ou groupé pendant la durée de l'initiation ?</label>
+              <br/>
+              <input type="radio" name="need_following" value={'individual'} id="" /> Suivi individuel<br/>
+              <input type="radio" name="need_following" value={'grouped'} id="" /> Suivi groupé<br/>
+              <input type="radio" name="need_following" value={'both'} id="" /> Les deux<br/>
+              <input type="radio" name="need_following" value={'none'} id="" /> Aucun
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">A la fin de cette initiation, seriez-vous intéressé par une immersion de groupe ?</label>
+              <br/>
+              <input type="radio" name="interested_by_immersion" value={'yes'} id="" /> Oui<br/>
+              <input type="radio" name="interested_by_immersion" value={'no'} id="" /> Non
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Pourquoi ?</label>
+              <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'}></textarea>
+            </fieldset>
             {showTimeForImmersionField() ? <>
-              <Form.Group className="mb-3 form-group" controlId="">
-                <Form.Label>Quelle serait pour vous la durée idéale de l'immersion ?</Form.Label>
-                <Form.Select name={'time_for_immersion'} onChange={handleChange} required={true}>
+              <fieldset className='mb-3 form-group'>
+                <label htmlFor="">Quelle serait pour vous la durée idéale de l'immersion ?</label>
+                <select name="time_for_immersion" id="" className={'form-control'}>
                   <option value="1 week-end">1 week-end</option>
                   <option value="3 days">3 jours</option>
                   <option value="1 week">1 semaine</option>
                   <option value="other">Autre</option>
-                </Form.Select>
+                </select>
                 {showTimeForImmersionOtherField() ? <>
-                  <Form.Control type="number" name={'custom_time_for_immersion'} onChange={handleChange} />
-                  <Form.Text className="text-muted">
-                    durée en jours
-                  </Form.Text>
-                </> : <></> }
-              </Form.Group>
+                  <fieldset className='mb-3 form-group'>
+                    <label htmlFor="">Quelle durée en jours ?</label>
+                    <input type="number" name="custom_time_for_immersion" id="" className={'form-control'} />
+                  </fieldset>
+                </> : <></>}
+              </fieldset>
             </> : <></>}
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Qu'aimeriez-vous apprendre ?</Form.Label>
-              <Form.Control as="textarea" rows={10} name={'want_to_know'} onChange={handleChange} />
-            </Form.Group>
-            <Form.Group className="mb-3 form-group" controlId="">
-              <Form.Label>Votre email</Form.Label>
-              <Form.Control type="text" name={'lead_email'} onChange={handleChange} />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Envoyer mes réponses
-            </Button>
-          </Form>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Qu'aimeriez-vous apprendre ?</label>
+              <textarea name="want_to_learn" id="" cols={30} rows={10} className={'form-control'}></textarea>
+            </fieldset>
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Votre email ?</label>
+              <input type="email" name="lead_email" id="" className={'form-control'} />
+            </fieldset>
+            <button type="submit" className='btn btn-primary'>Soumettre mes réponses</button>
+          </form>
         </div>
       </main>
 

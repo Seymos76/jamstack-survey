@@ -47,7 +47,7 @@
 }
 
 .title {
-  margin: 0;
+  margin: 50px auto;
   line-height: 1.15;
   font-size: 4rem;
 }
@@ -64,8 +64,10 @@
 }
 
 .description {
+  width: 60%;
   line-height: 1.5;
   font-size: 1.5rem;
+  text-align: justify;
 }
 
 .code {
