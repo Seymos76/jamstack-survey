@@ -81,17 +81,17 @@ export default function Home() {
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Seriez-vous intéressé par une initiation au 3ieme oeil et à certains concepts multidimensionnels ?</label>
               <br/>
-              <input type="radio" name="is_interested_by_initiation" value={'yes'} id="" /> Oui
+              <input type="radio" name="is_interested_by_initiation" value={'yes'} id="" onChange={handleChange} /> Oui
               <br/>
-              <input type="radio" name="is_interested_by_initiation" value={'no'} id="" /> Non 
+              <input type="radio" name="is_interested_by_initiation" value={'no'} id="" onChange={handleChange} /> Non 
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Pourquoi ?</label>
-              <textarea name="why_are_you_interested_by_initiation" id="" cols={30} rows={10} className={'form-control'}></textarea>
+              <textarea name="why_are_you_interested_by_initiation" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">En sachant que chacun a son rythme d'apprentissage, quelle serait pour vous la durée idéale de l'initiation ?</label>
-              <select name="time_to_learn" id="" className={'form-control'}>
+              <select name="time_to_learn" id="" className={'form-control'} onChange={handleChange}>
                 <option value="1 semaine">1 semaine</option>
                 <option value="1 mois">1 mois</option>
                 <option value="3 mois ou plus">3 mois ou plus</option>
@@ -101,36 +101,36 @@ export default function Home() {
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Quel serait pour vous le bon équilibre entre contenus écrit, audio et vidéo ?</label>
               <br/>
-              <input type="checkbox" name="content_type_preference" value={'more_writing'} id="" /> Ecrit de préférence<br/>
-              <input type="checkbox" name="content_type_preference" value={'more_audio'} id="" /> Audio de préférence<br/>
-              <input type="checkbox" name="content_type_preference" value={'more_video'} id="" /> Vidéo de préférence
+              <input type="checkbox" name="content_type_preference" value={'more_writing'} id="" onChange={handleChange} /> Ecrit de préférence<br/>
+              <input type="checkbox" name="content_type_preference" value={'more_audio'} id="" onChange={handleChange} /> Audio de préférence<br/>
+              <input type="checkbox" name="content_type_preference" value={'more_video'} id="" onChange={handleChange} /> Vidéo de préférence
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Quelle est la raison principale qui vous donnerait envie de prendre cette initiation ?</label>
-              <textarea name="main_reason_to_take_initiation" id="" cols={30} rows={10} className={'form-control'}></textarea>
+              <textarea name="main_reason_to_take_initiation" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Pensez-vous avoir besoin d'un suivi individuel ou groupé pendant la durée de l'initiation ?</label>
               <br/>
-              <input type="radio" name="need_following" value={'individual'} id="" /> Suivi individuel<br/>
-              <input type="radio" name="need_following" value={'grouped'} id="" /> Suivi groupé<br/>
-              <input type="radio" name="need_following" value={'both'} id="" /> Les deux<br/>
-              <input type="radio" name="need_following" value={'none'} id="" /> Aucun
+              <input type="radio" name="need_following" value={'individual'} id="" onChange={handleChange} /> Suivi individuel<br/>
+              <input type="radio" name="need_following" value={'grouped'} id="" onChange={handleChange} /> Suivi groupé<br/>
+              <input type="radio" name="need_following" value={'both'} id="" onChange={handleChange} /> Les deux<br/>
+              <input type="radio" name="need_following" value={'none'} id="" onChange={handleChange} /> Aucun
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">A la fin de cette initiation, seriez-vous intéressé par une immersion de groupe ?</label>
               <br/>
-              <input type="radio" name="interested_by_immersion" value={'yes'} id="" /> Oui<br/>
-              <input type="radio" name="interested_by_immersion" value={'no'} id="" /> Non
+              <input type="radio" name="interested_by_immersion" value={'yes'} id="" onChange={handleChange} /> Oui<br/>
+              <input type="radio" name="interested_by_immersion" value={'no'} id="" onChange={handleChange} /> Non
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Pourquoi ?</label>
-              <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'}></textarea>
+              <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
             {showTimeForImmersionField() ? <>
               <fieldset className='mb-3 form-group'>
                 <label htmlFor="">Quelle serait pour vous la durée idéale de l'immersion ?</label>
-                <select name="time_for_immersion" id="" className={'form-control'}>
+                <select name="time_for_immersion" id="" className={'form-control'} onChange={handleChange}>
                   <option value="1 week-end">1 week-end</option>
                   <option value="3 days">3 jours</option>
                   <option value="1 week">1 semaine</option>
@@ -139,18 +139,18 @@ export default function Home() {
                 {showTimeForImmersionOtherField() ? <>
                   <fieldset className='mb-3 form-group'>
                     <label htmlFor="">Quelle durée en jours ?</label>
-                    <input type="number" name="custom_time_for_immersion" id="" className={'form-control'} />
+                    <input type="number" name="custom_time_for_immersion" id="" className={'form-control'} onChange={handleChange} />
                   </fieldset>
                 </> : <></>}
               </fieldset>
             </> : <></>}
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Qu'aimeriez-vous apprendre ?</label>
-              <textarea name="want_to_learn" id="" cols={30} rows={10} className={'form-control'}></textarea>
+              <textarea name="want_to_learn" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Votre email ?</label>
-              <input type="email" name="lead_email" id="" className={'form-control'} />
+              <input type="email" name="lead_email" id="" className={'form-control'} onChange={handleChange} />
             </fieldset>
             <button type="submit" className='btn btn-primary'>Soumettre mes réponses</button>
           </form>
