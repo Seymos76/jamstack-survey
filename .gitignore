@@ -32,3 +32,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# docker-compose
+docker-compose.dev.yml
+docker-compose.prod-without-multistage.yml
+docker-compose.prod.yml
