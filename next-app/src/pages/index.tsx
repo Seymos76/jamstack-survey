@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 import Sondage from '../components/Sondage';
 
 export default function Home() {
@@ -22,64 +22,78 @@ export default function Home() {
     console.log(currentSondage);
   }
   const showTimeForImmersionField = () => {
-    if ('no' === sondage.interested_by_immersion) {
-      // prévoir la réinitialisation du champ supplémentaire de l'immersion
-      return false;
-    }
-    return true;
+    return 'no' === sondage.interested_by_immersion;
   }
   const showTimeForImmersionOtherField = () => {
     console.log('showTimeForImmersionOtherField executed');
-    if ('other' === sondage.time_for_immersion) {
-      return true;
-    }
-    return false;
+    return 'other' === sondage.time_for_immersion;
+  }
+  const isInterestedByInitiation = () => {
+    return 'yes' === sondage.is_interested_by_initiation;
+
+  }
+  const isFamiliar = () => {
+    return 'yes' === sondage.familiar_with_energy;
+  }
+  const isPratician = () => {
+    return 'yes' === sondage.is_pratician;
+  }
+  const wantsOtherSubjects = () => {
+    return 'other' === sondage.subjects;
   }
   console.log('sondage',sondage);
   return (
     <div className={styles.container}>
       <Head>
-        <title>Sondage pour une initiation au 3e oeil et aux concepts multidimensionnels</title>
+        <title>Sondage pour une initiation au 3e oeil et à sa multidimension</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Initiation au <a href="https://nextjs.org">3e oeil</a> et aux concepts multidimensionnels
+          Le 3e oeil et sa multidimension.
         </h1>
-
-        <p className={styles.description}>
-        Ouverture de canaux de communication intérieure/extérieure pour une lecture de notre vérité/réalité intérieure.
-        </p>
-        <p className={styles.description}>
-        Redécouverte des rapports intérieurs/extérieurs de chacun.
-        </p>
-        <p className={styles.description}>
-        Installer une guidance pérenne, évoluer en conscience.
-        </p>
-        <p className={styles.description}>
-        Casser les voiles et les mirages des masques, victimisation, sauveur, barreau, en finir avec le triangle de Kartmann.
-        </p>
-        <p className={styles.description}>
-        Davantage d’autonomie dans son rapport au réel, décoder les messages que la vie nous envoie.
-        </p>
-        <p className={styles.description}>
-        Cesser d’alimenter les blessures de l’égo sur des dynamiques mal comprises.
-        </p>
-        <p className={styles.description}>
-        Intégrer les mémoires et comprendre son expérience de vie.
-        </p>
-        <p className={styles.description}>
-        Cesser d’alimenter les blessures de l’égo sur des dynamiques mal comprises.
-        </p>
-        <p className={styles.description}>
-        Restaurer la souveraineté de l’Être, transformer le monde et les relations humaines pour enfin vivre avec quiétude.
-        </p>
 
         <div className={styles.grid}>
           <form action="https://localhost/api/sondage" method="post">
             <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Seriez-vous intéressé par une initiation au 3ieme oeil et à certains concepts multidimensionnels ?</label>
+              <label htmlFor="">Etes-vous familier avec un ou plusieurs domaines de l'énergétique ?</label>
+              <br/>
+              <input type="radio" name="familiar_with_energy" value={'yes'} id="" onChange={handleChange} /> Oui
+              <br/>
+              <input type="radio" name="familiar_with_energy" value={'no'} id="" onChange={handleChange} /> Non 
+            </fieldset>
+            {isFamiliar() && <>
+              <fieldset className='mb-3 form-group'>
+                <label htmlFor="">Qu'est-ce qui vous a amené à vous intéresser à l'énergétique ?</label>
+                <textarea name="what_did_bring_you_to_energetic" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
+              </fieldset>
+              <fieldset className='mb-3 form-group'>
+                <label htmlFor="">Etes-vous vous-même praticien(ne) (professionnel(le) ou non) ?</label>
+                <br/>
+                <input type="radio" name="is_pratician" value={'yes'} id="" onChange={handleChange} /> Oui
+                <br/>
+                <input type="radio" name="is_pratician" value={'no'} id="" onChange={handleChange} /> Non 
+              </fieldset>
+              {isPratician() && <>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Dans quel(s) domaine(s) ?</label>
+                  <textarea name="in_which_domains_are_you" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
+                </fieldset>
+              </>}
+              <fieldset className='mb-3 form-group'>
+                <label htmlFor="">Si vous avez déjà des perceptions subtiles, avec lesquelles êtes-vous le plus à l'aise ?</label><br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"vision"} /> Vision / clair-voyance<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"audience"} /> Ouïe / clair-audience<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"touch"} /> Toucher / clair-ressenti<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"olfaction"} /> Odorat / clair-olfaction<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"gustative"} /> Goût / clair-gustatif<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"none"} /> Aucune / clair-nada<br/>
+                <input type="checkbox" name="subtiles_perceptions" id="" value={"idontknow"} /> Je ne pense pas avoir de perception subtile<br/>
+              </fieldset>
+            </>}
+            <fieldset className='mb-3 form-group'>
+              <label htmlFor="">Seriez-vous intéressé(e) par une initiation au 3e oeil et à sa multidimension ?</label>
               <br/>
               <input type="radio" name="is_interested_by_initiation" value={'yes'} id="" onChange={handleChange} /> Oui
               <br/>
@@ -89,69 +103,83 @@ export default function Home() {
               <label htmlFor="">Pourquoi ?</label>
               <textarea name="why_are_you_interested_by_initiation" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">En sachant que chacun a son rythme d'apprentissage, quelle serait pour vous la durée idéale de l'initiation ?</label>
-              <select name="time_to_learn" id="" className={'form-control'} onChange={handleChange}>
-                <option value="1 semaine">1 semaine</option>
-                <option value="1 mois">1 mois</option>
-                <option value="3 mois ou plus">3 mois ou plus</option>
-                <option value="no_idea">Aucune idée</option>
-              </select>
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Quel serait pour vous le bon équilibre entre contenus écrit, audio et vidéo ?</label>
-              <br/>
-              <input type="checkbox" name="content_type_preference" value={'more_writing'} id="" onChange={handleChange} /> Ecrit de préférence<br/>
-              <input type="checkbox" name="content_type_preference" value={'more_audio'} id="" onChange={handleChange} /> Audio de préférence<br/>
-              <input type="checkbox" name="content_type_preference" value={'more_video'} id="" onChange={handleChange} /> Vidéo de préférence
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Quelle est la raison principale qui vous donnerait envie de prendre cette initiation ?</label>
-              <textarea name="main_reason_to_take_initiation" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Pensez-vous avoir besoin d'un suivi individuel ou groupé pendant la durée de l'initiation ?</label>
-              <br/>
-              <input type="radio" name="need_following" value={'individual'} id="" onChange={handleChange} /> Suivi individuel<br/>
-              <input type="radio" name="need_following" value={'grouped'} id="" onChange={handleChange} /> Suivi groupé<br/>
-              <input type="radio" name="need_following" value={'both'} id="" onChange={handleChange} /> Les deux<br/>
-              <input type="radio" name="need_following" value={'none'} id="" onChange={handleChange} /> Aucun
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">A la fin de cette initiation, seriez-vous intéressé par une immersion de groupe ?</label>
-              <br/>
-              <input type="radio" name="interested_by_immersion" value={'yes'} id="" onChange={handleChange} /> Oui<br/>
-              <input type="radio" name="interested_by_immersion" value={'no'} id="" onChange={handleChange} /> Non
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Pourquoi ?</label>
-              <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
-            </fieldset>
-            {showTimeForImmersionField() ? <>
-              <fieldset className='mb-3 form-group'>
-                <label htmlFor="">Quelle serait pour vous la durée idéale de l'immersion ?</label>
-                <select name="time_for_immersion" id="" className={'form-control'} onChange={handleChange}>
-                  <option value="1 week-end">1 week-end</option>
-                  <option value="3 days">3 jours</option>
-                  <option value="1 week">1 semaine</option>
-                  <option value="other">Autre</option>
-                </select>
-                {showTimeForImmersionOtherField() ? <>
-                  <fieldset className='mb-3 form-group'>
-                    <label htmlFor="">Quelle durée en jours ?</label>
-                    <input type="number" name="custom_time_for_immersion" id="" className={'form-control'} onChange={handleChange} />
+            {isInterestedByInitiation() 
+            ? <>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Quels sujets complémentaires seraient susceptibles de vous intéresser ?</label><br/>
+                  <input type="checkbox" name="subjects" id="" /> Vies karmiques<br/>
+                  <input type="checkbox" name="subjects" id="" /> Multivers<br/>
+                  <input type="checkbox" name="subjects" id="" /> Charkras et corps énergétiques<br/>
+                  <input type="checkbox" name="subjects" id="" /> Autres<br/>
+                  {wantsOtherSubjects() && <>
+                    <textarea name="other_subjects" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange} placeholder={"Merci de faire une liste des sujets que vous aimeriez aborder"}></textarea>
+                  </>}
+                </fieldset>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Quel serait pour vous le bon équilibre entre contenus écrit, audio et vidéo ?</label>
+                  <br/>
+                  <input type="checkbox" name="content_type_preference" value={'more_writing'} id="" onChange={handleChange} /> Ecrit de préférence<br/>
+                  <input type="checkbox" name="content_type_preference" value={'more_audio'} id="" onChange={handleChange} /> Audio de préférence<br/>
+                  <input type="checkbox" name="content_type_preference" value={'more_video'} id="" onChange={handleChange} /> Vidéo de préférence<br/>
+                  <input type="checkbox" name="content_type_preference" value={'balanced_mix'} id="" onChange={handleChange} /> Un mix équilibré des trois
+                </fieldset>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Pensez-vous avoir besoin d'un suivi pendant la durée de l'initiation ?</label>
+                  <br/>
+                  <input type="radio" name="need_following" value={'individual'} id="" onChange={handleChange} /> Suivi individuel<br/>
+                  <input type="radio" name="need_following" value={'grouped'} id="" onChange={handleChange} /> Suivi groupé<br/>
+                  <input type="radio" name="need_following" value={'both'} id="" onChange={handleChange} /> Les deux<br/>
+                  <input type="radio" name="need_following" value={'none'} id="" onChange={handleChange} /> Aucun
+                </fieldset>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">A la fin de cette initiation, seriez-vous intéressé par une immersion de groupe ?</label>
+                  <br/>
+                  <input type="radio" name="interested_by_immersion" value={'yes'} id="" onChange={handleChange} /> Oui<br/>
+                  <input type="radio" name="interested_by_immersion" value={'no'} id="" onChange={handleChange} /> Non
+                </fieldset>
+                <fieldset className='mb-3 form-group'>
+                    <label htmlFor="">Quelle dimension de groupe est la plus confortable pour vous ?</label>
+                    <select name="group_size" id="" className={'form-control'} onChange={handleChange}>
+                      <option value="1 week-end">Restreint (5 personnes max)</option>
+                      <option value="3 days">Moyen (6 à 10 personnes)</option>
+                      <option value="1 week">Plus il y a de monde et mieux c'est (10 personnes et plus)</option>
+                    </select>
                   </fieldset>
-                </> : <></>}
-              </fieldset>
-            </> : <></>}
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Qu'aimeriez-vous apprendre ?</label>
-              <textarea name="want_to_learn" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
-            </fieldset>
-            <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Votre email ?</label>
-              <input type="email" name="lead_email" id="" className={'form-control'} onChange={handleChange} />
-            </fieldset>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Pourquoi ?</label>
+                  <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
+                </fieldset>
+                  {showTimeForImmersionField() 
+                  ? <>
+                      <fieldset className='mb-3 form-group'>
+                        <label htmlFor="">Quelle serait pour vous la durée idéale de l'immersion ?</label>
+                        <select name="time_for_immersion" id="" className={'form-control'} onChange={handleChange}>
+                          <option value="1 week-end">1 week-end</option>
+                          <option value="3 days">3 jours</option>
+                          <option value="1 week">1 semaine</option>
+                          <option value="other">Autre</option>
+                        </select>
+                        {showTimeForImmersionOtherField() 
+                        ? <>
+                            <fieldset className='mb-3 form-group'>
+                              <label htmlFor="">Quelle durée en jours ?</label>
+                              <input type="number" name="custom_time_for_immersion" min={1} id="" className={'form-control'} onChange={handleChange} />
+                            </fieldset>
+                          </> 
+                        : <></>}
+                      </fieldset>
+                    </>
+                  : <></>}
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Auriez-vous des questions qui concernent l'initiation ?</label>
+                  <textarea name="have_you_some_questions" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
+                </fieldset>
+                <fieldset className='mb-3 form-group'>
+                  <label htmlFor="">Votre email ?</label>
+                  <input type="email" name="lead_email" id="" className={'form-control'} onChange={handleChange} />
+                </fieldset>
+              </> 
+            : <></>}
             <button type="submit" className='btn btn-primary'>Soumettre mes réponses</button>
           </form>
         </div>
