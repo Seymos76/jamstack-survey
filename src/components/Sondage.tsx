@@ -1,10 +1,10 @@
-export default 
+export default
 class Sondage {
   familiar_with_energy: string;
+  what_did_bring_you_to_energetic: string;
   is_pratician: string;
   in_which_domains_are_you: string;
-  subtiles_perceptions: string;
-  what_did_bring_you_to_energetic: string;
+  subtiles_perceptions: Array<string>;
   is_interested_by_initiation: string;
   why_are_you_interested_by_initiation: string;
   subjects: string;
@@ -18,4 +18,5 @@ class Sondage {
   custom_time_for_immersion: string;
   have_you_some_questions: string;
   lead_email: string;
+  agree_for_notification: boolean;
 }

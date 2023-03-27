@@ -1,25 +1,47 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Sondage from '../components/Sondage';
 
 export default function Home() {
   let newSondage = new Sondage();
-    
+
   const [sondage, setSondage] = useState(newSondage);
 
   useEffect(() => {
     showTimeForImmersionOtherField();
   }, [sondage]);
 
+  const sendMail = async (data) => {
+    try {
+      return await fetch("https://sondage-api.herokuapp.com/", {
+        "method": "POST",
+        "headers": { "content-type": "application/json" },
+        "body": JSON.stringify(data)
+      });
+    } catch (error) {
+      // toast error message. whatever you wish
+    }
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await sendMail(sondage);
+    console.log('response',response);
+  }
   const handleChange = ({target}) => {
     const { name, value } = target;
     console.log(name, value);
+    if ("subtiles_perceptions" === name) {
+      if (!sondage.subtiles_perceptions.includes(value)) {
+        sondage.subtiles_perceptions.push(value);
+      } else {
+        console.log(sondage.subtiles_perceptions);
+      }
+    }
     let currentSondage: any = {...sondage}
     currentSondage[name] = value;
     setSondage(currentSondage);
-    console.log(currentSondage);
+    console.log('current sondage ',currentSondage);
   }
   const showTimeForImmersionField = () => {
     return 'no' === sondage.interested_by_immersion;
@@ -55,17 +77,17 @@ export default function Home() {
         </h1>
 
         <div className={styles.grid}>
-          <form action="https://localhost/api/sondage" method="post">
+          <form action="" method="post" onSubmit={handleSubmit}>
             <fieldset className='mb-3 form-group'>
-              <label htmlFor="">Etes-vous familier avec un ou plusieurs domaines de l'énergétique ?</label>
+              <label htmlFor="">Etes-vous familier(ère) avec un ou plusieurs domaines de l'énergétique ?</label>
               <br/>
               <input type="radio" name="familiar_with_energy" value={'yes'} id="" onChange={handleChange} /> Oui
               <br/>
-              <input type="radio" name="familiar_with_energy" value={'no'} id="" onChange={handleChange} /> Non 
+              <input type="radio" name="familiar_with_energy" value={'no'} id="" onChange={handleChange} /> Non
             </fieldset>
             {isFamiliar() && <>
               <fieldset className='mb-3 form-group'>
-                <label htmlFor="">Qu'est-ce qui vous a amené à vous intéresser à l'énergétique ?</label>
+                <label htmlFor="">Qu'est-ce qui vous a amené(e) à vous intéresser à l'énergétique ?</label>
                 <textarea name="what_did_bring_you_to_energetic" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
               </fieldset>
               <fieldset className='mb-3 form-group'>
@@ -73,7 +95,7 @@ export default function Home() {
                 <br/>
                 <input type="radio" name="is_pratician" value={'yes'} id="" onChange={handleChange} /> Oui
                 <br/>
-                <input type="radio" name="is_pratician" value={'no'} id="" onChange={handleChange} /> Non 
+                <input type="radio" name="is_pratician" value={'no'} id="" onChange={handleChange} /> Non
               </fieldset>
               {isPratician() && <>
                 <fieldset className='mb-3 form-group'>
@@ -97,13 +119,13 @@ export default function Home() {
               <br/>
               <input type="radio" name="is_interested_by_initiation" value={'yes'} id="" onChange={handleChange} /> Oui
               <br/>
-              <input type="radio" name="is_interested_by_initiation" value={'no'} id="" onChange={handleChange} /> Non 
+              <input type="radio" name="is_interested_by_initiation" value={'no'} id="" onChange={handleChange} /> Non
             </fieldset>
             <fieldset className='mb-3 form-group'>
               <label htmlFor="">Pourquoi ?</label>
               <textarea name="why_are_you_interested_by_initiation" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
             </fieldset>
-            {isInterestedByInitiation() 
+            {isInterestedByInitiation()
             ? <>
                 <fieldset className='mb-3 form-group'>
                   <label htmlFor="">Quels sujets complémentaires seraient susceptibles de vous intéresser ?</label><br/>
@@ -149,7 +171,7 @@ export default function Home() {
                   <label htmlFor="">Pourquoi ?</label>
                   <textarea name="why_are_you_interested_by_immersion" id="" cols={30} rows={10} className={'form-control'} onChange={handleChange}></textarea>
                 </fieldset>
-                  {showTimeForImmersionField() 
+                  {showTimeForImmersionField()
                   ? <>
                       <fieldset className='mb-3 form-group'>
                         <label htmlFor="">Quelle serait pour vous la durée idéale de l'immersion ?</label>
@@ -159,13 +181,13 @@ export default function Home() {
                           <option value="1 week">1 semaine</option>
                           <option value="other">Autre</option>
                         </select>
-                        {showTimeForImmersionOtherField() 
+                        {showTimeForImmersionOtherField()
                         ? <>
                             <fieldset className='mb-3 form-group'>
                               <label htmlFor="">Quelle durée en jours ?</label>
                               <input type="number" name="custom_time_for_immersion" min={1} id="" className={'form-control'} onChange={handleChange} />
                             </fieldset>
-                          </> 
+                          </>
                         : <></>}
                       </fieldset>
                     </>
@@ -178,7 +200,10 @@ export default function Home() {
                   <label htmlFor="">Votre email ?</label>
                   <input type="email" name="lead_email" id="" className={'form-control'} onChange={handleChange} />
                 </fieldset>
-              </> 
+                <fieldset className='mb-3 form-group'>
+                  <input type="checkbox" name="agree_for_notification" id="" onChange={handleChange} /> J'accepte d'être prévenu par email à la sortie du guide.
+                </fieldset>
+              </>
             : <></>}
             <button type="submit" className='btn btn-primary'>Soumettre mes réponses</button>
           </form>
@@ -186,16 +211,9 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        <p>
+          Sondage créé par <a href="mailto:devntech@proton.me" target={'_blank'}>Louis THOMAS</a>
+        </p>
       </footer>
     </div>
   )
